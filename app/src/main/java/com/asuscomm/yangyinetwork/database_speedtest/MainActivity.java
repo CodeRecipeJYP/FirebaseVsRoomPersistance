@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.asuscomm.yangyinetwork.database_speedtest.dbs.FirebaseDatabaseImpl;
+import com.asuscomm.yangyinetwork.database_speedtest.dbs.room.RoomDatabaseImpl;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -15,7 +16,7 @@ import io.reactivex.subjects.PublishSubject;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private FirebaseDatabaseImpl mDb;
+    private Database mDb;
     private int mCurrentIteration;
     private long mStartAtInMillis;
     private PublishSubject<Boolean> mNotifier = PublishSubject.create();
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mIteration = 10;
+        mIteration = 1000;
         initializeDb(() -> timeCheck(mIteration));
     }
 
@@ -35,23 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
         final Calendar c = Calendar.getInstance();
         mStartAtInMillis = c.getTimeInMillis();
-
         mCurrentIteration = 1;
 
 
         ((Observable<Boolean>) mNotifier).map((onlyTrue) -> (mCurrentIteration > iteration))
                 .subscribe(
                         (isFinished) -> {
-//                            Log.d(TAG, "timeCheck() called with: mCurrentIteration = [" + mCurrentIteration + "]");
+                            mCurrentIteration++;
                             if (isFinished) {
                                 Log.d(TAG, "timeCheck: isfinished");
                                 finishedTimeCheck();
                             } else {
+                                Log.d(TAG, "timeCheck() called with: mCurrentIteration = [" + mCurrentIteration + "]");
                                 Log.d(TAG, "timeCheck: not finished");
                                 runSingleStatement(() -> mNotifier.onNext(true));
                             }
 
-                            mCurrentIteration++;
                         }
                 );
 
@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "runSingleStatement: ");
 
         mDb.getList(
-                (results) ->
-                {
+                (results) -> {
                     Log.d(TAG, "runSingleStatement: results=" + results.toString());
                     finished.run();
                 }
@@ -89,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeDb(Action finished) {
         Log.d(TAG, "initializeDb: ");
-        mDb = new FirebaseDatabaseImpl();
-//        Database mDb = new RoomDatabase();
+//        mDb = new FirebaseDatabaseImpl();
+        mDb = new RoomDatabaseImpl();
 
         mDb.initialize(finished);
     }

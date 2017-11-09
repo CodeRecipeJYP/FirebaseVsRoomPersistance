@@ -29,8 +29,8 @@ public class FirebaseDatabaseImpl implements Database {
     @Override
     public void initialize(Action finished) {
         Log.d(TAG, "initialize: ");
-
         mDbInstance = FirebaseDatabase.getInstance();
+        mDbInstance.setPersistenceEnabled(true);
 
         DatabaseReference myRef = mDbInstance.getReference("messages");
         myRef.removeValue(
