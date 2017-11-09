@@ -35,7 +35,7 @@ public class RoomDatabase implements Database {
     }
 
     @Override
-    public void getList(Consumer<List<String>> finished) {
+    public void getList(Consumer<Object> finished) {
         Log.d(TAG, "getList: ");
 
         new Handler().postDelayed(

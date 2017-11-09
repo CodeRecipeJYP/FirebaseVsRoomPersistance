@@ -11,5 +11,5 @@ import io.reactivex.functions.Consumer;
 
 public interface Database {
     void initialize(Action finished);
-    void getList(Consumer<List<String>> finished);
+    void getList(Consumer<Object> finished);
 }

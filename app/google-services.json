@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "902858322266",
+    "firebase_url": "https://horn-localdb-latencytest.firebaseio.com",
+    "project_id": "horn-localdb-latencytest",
+    "storage_bucket": "horn-localdb-latencytest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902858322266:android:58c23236583ecf68",
+        "android_client_info": {
+          "package_name": "com.asuscomm.yangyinetwork.database_speedtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902858322266-4lr2dns4f11jtpu0tbqj5mo2tvpj45mk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfQlt29GwkA324PdEIrbxrru8Y4L5ys3c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

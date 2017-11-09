@@ -4,8 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.asuscomm.yangyinetwork.database_speedtest.dbs.FirebaseDatabase;
+import com.asuscomm.yangyinetwork.database_speedtest.dbs.FirebaseDatabaseImpl;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import io.reactivex.Observable;
@@ -14,7 +15,7 @@ import io.reactivex.subjects.PublishSubject;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private FirebaseDatabase mDb;
+    private FirebaseDatabaseImpl mDb;
     private int mCurrentIteration;
     private long mStartAtInMillis;
     private PublishSubject<Boolean> mNotifier = PublishSubject.create();
@@ -78,13 +79,17 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "runSingleStatement: ");
 
         mDb.getList(
-                (results) -> finished.run()
+                (results) ->
+                {
+                    Log.d(TAG, "runSingleStatement: results=" + results.toString());
+                    finished.run();
+                }
         );
     }
 
     private void initializeDb(Action finished) {
         Log.d(TAG, "initializeDb: ");
-        mDb = new FirebaseDatabase();
+        mDb = new FirebaseDatabaseImpl();
 //        Database mDb = new RoomDatabase();
 
         mDb.initialize(finished);
