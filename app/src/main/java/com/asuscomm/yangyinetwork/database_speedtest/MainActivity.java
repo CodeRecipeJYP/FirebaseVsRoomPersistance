@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.asuscomm.yangyinetwork.database_speedtest.dbs.FirebaseDatabaseImpl;
+import com.asuscomm.yangyinetwork.database_speedtest.dbs.FirebaseDatabaseOfflineImpl;
 import com.asuscomm.yangyinetwork.database_speedtest.dbs.room.RoomDatabaseImpl;
 
 import java.util.Arrays;
@@ -89,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     private void initializeDb(Action finished) {
         Log.d(TAG, "initializeDb: ");
 //        mDb = new FirebaseDatabaseImpl();
-        mDb = new RoomDatabaseImpl();
+        mDb = new FirebaseDatabaseOfflineImpl();
+//        mDb = new RoomDatabaseImpl();
 
         mDb.initialize(finished);
     }

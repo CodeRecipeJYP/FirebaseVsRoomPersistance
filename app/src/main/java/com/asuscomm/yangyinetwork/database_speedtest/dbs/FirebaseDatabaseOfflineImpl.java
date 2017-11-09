@@ -1,6 +1,5 @@
 package com.asuscomm.yangyinetwork.database_speedtest.dbs;
 
-import android.os.Handler;
 import android.util.Log;
 
 import com.asuscomm.yangyinetwork.database_speedtest.Database;
@@ -11,8 +10,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.functions.Action;
@@ -22,7 +19,7 @@ import io.reactivex.functions.Consumer;
  * Created by jaeyoung on 09/11/2017.
  */
 
-public class FirebaseDatabaseImpl implements Database {
+public class FirebaseDatabaseOfflineImpl implements Database {
     private static final String TAG = "FirebaseDatabaseImpl";
     private FirebaseDatabase mDbInstance;
 
@@ -30,7 +27,7 @@ public class FirebaseDatabaseImpl implements Database {
     public void initialize(Action finished) {
         Log.d(TAG, "initialize: ");
         mDbInstance = FirebaseDatabase.getInstance();
-//        mDbInstance.setPersistenceEnabled(true);
+        mDbInstance.setPersistenceEnabled(true);
 
         DatabaseReference myRef = mDbInstance.getReference("messages");
         myRef.removeValue(
