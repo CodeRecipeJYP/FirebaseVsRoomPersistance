@@ -6,8 +6,6 @@ import android.util.Log;
 
 import com.asuscomm.yangyinetwork.database_speedtest.dbs.FirebaseDatabase;
 
-import org.reactivestreams.Publisher;
-
 import java.util.Calendar;
 
 import io.reactivex.Observable;
@@ -20,14 +18,15 @@ public class MainActivity extends AppCompatActivity {
     private int mCurrentIteration;
     private long mStartAtInMillis;
     private PublishSubject<Boolean> mNotifier = PublishSubject.create();
+    private int mIteration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int iteration = 10;
-        initializeDb(() -> timeCheck(iteration));
+        mIteration = 10;
+        initializeDb(() -> timeCheck(mIteration));
     }
 
     private void timeCheck(final int iteration) {
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ((Observable<Boolean>) mNotifier).map((onlyTrue) -> (mCurrentIteration > iteration))
                 .subscribe(
                         (isFinished) -> {
-                            Log.d(TAG, "timeCheck() called with: mCurrentIteration = [" + mCurrentIteration + "]");
+//                            Log.d(TAG, "timeCheck() called with: mCurrentIteration = [" + mCurrentIteration + "]");
                             if (isFinished) {
                                 Log.d(TAG, "timeCheck: isfinished");
                                 finishedTimeCheck();
@@ -71,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                 "endAtInMillis = [" + endAtInMillis + "]");
         Log.d(TAG, "timeCheck() called with: " +
                 "elapsedTimeInMillis = [" + elapsedTimeInMillis + "]");
+        Log.d(TAG, "timeCheck() called with: " +
+                "elapsedTimeInMillis/mIteration = [" + elapsedTimeInMillis/ mIteration + "]");
     }
 
     private void runSingleStatement(Action finished) {
